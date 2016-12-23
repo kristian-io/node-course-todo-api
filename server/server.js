@@ -26,7 +26,7 @@ app.post('/todos', (req, res) => {
 // GET todos ROUTE
 app.get('/todos', (req, res) => {
   Todo.find({}).then((todos) => {
-    console.log(todos);
+    // console.log(todos);
     res.send({todos});
   }, (e) => {
     console.log(e);
