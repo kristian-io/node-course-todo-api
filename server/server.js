@@ -10,7 +10,7 @@ var app = express();
 
 app.use(bodyParser.json());
 
-// POST todo ROUTE
+// POST /todos ROUTE
 app.post('/todos', (req, res) => {
   var todo = new Todo({
     text: req.body.text
@@ -24,7 +24,7 @@ app.post('/todos', (req, res) => {
   });
 });
 
-// GET todos ROUTE
+// GET /todos ROUTE
 app.get('/todos', (req, res) => {
   Todo.find({}).then((todos) => {
     // console.log(todos);
@@ -35,10 +35,11 @@ app.get('/todos', (req, res) => {
   });
 });
 
+// GET /todos/:id ROUTE
 app.get('/todos/:id', (req, res) => {
   var id = req.params.id;
   if (!ObjectID.isValid(id)) {
-    console.log('Id is not valid!');
+    // console.log('Id is not valid!');
     return res.status(404).send({})
   }
   Todo.findById(id).then((todo) => {
