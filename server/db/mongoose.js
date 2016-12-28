@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
-var dblogin = require('./../../private/dblogin.js');
+let user="user";
+let password='*mlab123456';
 
-// console.log(dblogin.user, dblogin.password);!!!
 
 mongoose.Promise = global.Promise;
 mongoose.connect(`mongodb://${dblogin.user}:${dblogin.password}@ds141328.mlab.com:41328/data`);
