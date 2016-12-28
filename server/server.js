@@ -98,6 +98,10 @@ app.patch('/todos/:id', (req, res) => {
   })
 })
 
+// POST /users
+ //use pick as in patch
+
+
 
 //Starting express server
 app.listen(port, () => {
