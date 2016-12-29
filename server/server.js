@@ -56,7 +56,7 @@ app.get('/todos/:id', (req, res) => {
   // res.send(req.params);
 });
 
-
+// DELETE /todos:id ROUTE
 app.delete('/todos/:id', (req, res) => {
   var id = req.params.id;
   if (!ObjectID.isValid(id)) {
@@ -74,6 +74,7 @@ app.delete('/todos/:id', (req, res) => {
   });
 });
 
+// PATCH /todos:id ROUTE
 app.patch('/todos/:id', (req, res) => {
   var id = req.params.id;
   var body = _.pick(req.body, ['text', 'completed'])
@@ -98,10 +99,17 @@ app.patch('/todos/:id', (req, res) => {
   })
 })
 
-// POST /users
- //use pick as in patch
-
-
+// POST /users ROUTE
+app.post('/users', (req, res) => {
+  var user = new User (_.pick(req.body, ['email', 'password']))
+  user.save().then(() => {
+    return user.generateAuthToken();
+  }).then((token) => {
+    res.header('x-auth', token).send(user)
+  }).catch((e) => {
+    res.status(400).send(e);
+  })
+});
 
 //Starting express server
 app.listen(port, () => {
