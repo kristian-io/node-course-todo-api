@@ -6,6 +6,7 @@ const {ObjectID} = require('mongodb');
 const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
+const {authenticate} = require('./middleware/authenticate');
 
 var app = express();
 const port = process.env.PORT || 3000;
@@ -109,6 +110,12 @@ app.post('/users', (req, res) => {
   }).catch((e) => {
     res.status(400).send(e);
   })
+});
+
+
+// GET /users/me ROUTE
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user)
 });
 
 //Starting express server
