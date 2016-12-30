@@ -68,6 +68,29 @@ UserSchema.statics.findByToken = function (token) {
   });
 };
 
+UserSchema.statics.findByCredentials = function ( email, password) {
+    var User = this;
+
+
+      return User.findOne({email}).then((user) => {
+        if(!user) {
+          return Promise.reject('user not found');
+        }
+
+        return new Promise((resolve, reject) => {
+          // console.log(password, user.password);
+          bcrypt.compare(password, user.password, (err, res) => {
+            if (res) {
+              // console.log('correct password');
+              resolve(user);
+            } else {
+              reject('incorrect password');
+            }
+          });
+        })
+      });
+};
+
 UserSchema.pre('save', function (next) {
   var user = this;
   if (user.isModified('password')) {
@@ -80,7 +103,7 @@ UserSchema.pre('save', function (next) {
         });
       });
   } else {
-    console.log('password was not modified.');
+    // console.log('password was not modified.');
     next();
   }
 });
